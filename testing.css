@@ -1,0 +1,31 @@
+/* This stylesheet is for testing CSS, styles here will not be deactivated when toggling wireframe style *./
+
+/* Wireframe toggle button */
+#toggleWireframeCSS {
+  position: fixed;
+  bottom: 0px;
+  right: 0px;
+  padding: 6px 10px;
+  opacity: 0.5;
+}
+#toggleWireframeCSS:hover {
+  opacity: 1;
+}
+
+body, #more-about-me {
+  display:grid;
+}
+
+#more-about-me {
+  grid-template-columns: minmax(300px, 1fr) minmax(300px, 3fr);
+  grid-gap: 0.5em;
+}
+
+#more-about-me div {
+  border: thin dotted #aaa;
+  padding: 0.5em;
+}
+
+#more-about-me div:nth-child(odd) {
+  background-color:#1111;
+}
