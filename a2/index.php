@@ -14,11 +14,12 @@
   <body>
 
     <header>
-      <div>Put company logo and name here</div>
+      <div><img src='../../media/lunardo_logo_big.png' alt='RMIT University logo' height=80 />Kevin Vu 
+      </div>
     </header>
 
     <nav>
-      <div>Put website navigation links here</div>
+      <div><a href="/s3678491/wp/a2/lunardo.html" target="_blank">LUNARDO Cinemas</a></div>
     </nav>
 
     <main>
