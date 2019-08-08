@@ -19,7 +19,7 @@
     </header>
 
     <nav>
-      <div><a href="/s3678491/wp/a2/lunardo.html" target="_blank">LUNARDO Cinemas</a></div>
+      <div><a href="/~s3678491/wp/a2/lunardo.html" target="_blank">LUNARDO Cinemas</a></div>
     </nav>
 
     <main>
