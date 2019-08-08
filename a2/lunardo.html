@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" type="image/icon" href="../../media/lunardo_logo.png" />
+    <title>LUNARDO Cinemas</title>
+    <style>
+      html {       
+        background-color:#eff;
+        scroll-behavior: smooth;
+      }
+      body {
+        margin: 0;
+        padding: 0;
+        display: relative;
+      }
+      body > * {
+        box-sizing: border-box;
+      }
+      header {
+        height:50px;
+        border: solid orange 1px;
+      }
+      header, nav {
+        text-align: center;
+      }
+      nav {
+        position: sticky;
+        top:0px;
+      }
+      nav a {
+        padding: 10px;
+        border: 1px green solid;
+        display: inline-block;
+        background-color:#6666;
+        color: #c00;
+      }
+      nav a.active {
+        background-color:#fff0;
+        transition: 0.3s;
+      }
+      main {
+      }
+      article {
+        padding-top: 50px;
+        height:100vh;
+        border: thin red solid;
+      }
+      article:nth-child(2n),
+      nav a:nth-child(2n).active {
+        background-color: lightgoldenrodyellow;
+      }
+      footer {
+        background-color: black;
+        height:100px;
+      }
+      @media screen and (min-width: 600px) {
+        header {
+          position: fixed;
+          display: inline-block;
+          border: solid orange 1px;
+          top: 0px;
+          height: 50px;
+        }
+        nav {
+          display: inline-block;
+          position: fixed;
+          top:0px;
+          right:0px;
+        }
+
+      }
+    </style>
+    <script>
+      // TIP: I cover the construction of this script at the end of weekly chat 8
+      window.onscroll = function() {
+        console.clear();
+        let navlinks = document.getElementsByTagName("nav")[0].children;
+        let articles = document.getElementsByTagName("main")[0].children;
+        let whatshouldbeactive=articles[0];
+        if (articles[navlinks.length-1].getBoundingClientRect().top <= 0)
+          whatshouldbeactive = articles[navlinks.length-1];
+        else {
+          for (let i=0; i<navlinks.length-1; i++) {
+            console.log(articles[i].id+": "+articles[i].getBoundingClientRect().top);
+            var thisart = articles[i];
+            var nextart = articles[i+1];
+            if (thisart.getBoundingClientRect().top <= 0 && nextart.getBoundingClientRect().top > 0) {
+              whatshouldbeactive=thisart;
+              break;
+            }
+          }
+        }
+        console.log('This link should be active: '+whatshouldbeactive.id);
+        console.log('- - - - - - - -');
+
+        for (let j=0; j<navlinks.length; j++) {
+          if (articles[j]==whatshouldbeactive) 
+            navlinks[j].classList.add("active");
+          else
+            navlinks[j].classList.remove("active");
+        }
+      }
+    </script>
+  </head>
+
+  <body>
+    <!-- TIP: I cover the construction of this script at the end of weekly chat 8 -->
+    <header>Logo - Lunardo</header>
+    <nav>
+      <a href=#AA class=active>LA</a>
+      <a href=#AB>LB</a>
+      <a href=#AC>LC</a>
+      <a href=#AD>LD</a>
+      <a href=#AE>LE</a>
+      <a href=#AF>LF</a>
+      <a href=#AG>LG</a>
+    </nav>
+
+    <main>
+      <article id=AA><h1>AA</h1></article>
+      <article id=AB><h1>AB</h1></article>
+      <article id=AC><h1>AC</h1></article>
+      <article id=AD><h1>AD</h1></article>
+      <article id=AE><h1>AE</h1></article>
+      <article id=AF><h1>AF</h1></article>
+      <article id=AG><h1>AG</h1></article>
+    </main>
+    
+    <footer></footer>
+
+  </body>
+
+</html>
