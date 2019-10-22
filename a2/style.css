@@ -8,6 +8,10 @@ html {
     scroll-behavior: smooth;
 }
 
+ul {
+    list-style-type: none;
+}
+
 body {
     font-family: 'Red Hat Text', Arial, Helvetica, sans-serif;
     font-size: 16px;
@@ -97,7 +101,7 @@ nav ul {
 
 .nav-list {
     list-style: none;
-    color: white;
+    color: #fff8dc;
     height: 100%;
     display: table;
     float: left;
@@ -117,7 +121,8 @@ nav ul {
     text-align: center;
 }
 
-.nav-list:hover .nav-content {
+.nav-list:hover .nav-content,
+.active {
     color: rgb(255, 255, 50);
     text-shadow: -2px -2px 0 rgb(60, 20, 90), 2px -2px 0 rgb(60, 20, 90), -2px 2px 0 rgb(60, 20, 90), 2px 2px 0 rgb(60, 20, 90), 3px 3px 0 #fff8dc, 4px 4px 0 #fff8dc, 5px 5px 0 #fff8dc, 6px 6px 0 #fff8dc;
     transform: scale(1.2);
@@ -152,15 +157,19 @@ nav ul {
     0% {
         background-image: linear-gradient(90deg, rgba(220, 100, 140, 0.3) 0%, rgba(15, 15, 120, 0.3) 40%, rgba(60, 20, 90, 0.3) 100%), url(../../media/avengers-large.jpg);
     }
+
     25% {
         background-image: linear-gradient(90deg, rgba(220, 100, 140, 0.3) 0%, rgba(15, 15, 120, 0.3) 40%, rgba(60, 20, 90, 0.3) 100%), url(../../media/top-end-wedding-large.jpg);
     }
+
     50% {
         background-image: linear-gradient(90deg, rgba(220, 100, 140, 0.3) 0%, rgba(15, 15, 120, 0.3) 40%, rgba(60, 20, 90, 0.3) 100%), url(../../media/dumbo-large.jpg);
     }
+
     75% {
         background-image: linear-gradient(90deg, rgba(220, 100, 140, 0.3) 0%, rgba(15, 15, 120, 0.3) 40%, rgba(60, 20, 90, 0.3) 100%), url(../../media/happy-prince-large.jpg)
     }
+
     100% {
         background-image: linear-gradient(90deg, rgba(220, 100, 140, 0.3) 0%, rgba(15, 15, 120, 0.3) 40%, rgba(60, 20, 90, 0.3) 100%), url(../../media/avengers-large.jpg);
     }
@@ -174,7 +183,7 @@ nav ul {
     margin: auto;
     background-color: rgb(60, 20, 90);
     color: rgb(220, 100, 140);
-    /* font-family: 'Red Hat Text', sans-serif; */
+    /* font-family  : 'Red Hat Text', sans-serif; */
     font-size: 26px;
     font-weight: 700;
 }
@@ -286,6 +295,7 @@ nav ul {
 .movie-box {
     width: 450px;
     max-width: 450px;
+    min-height: 530px;
     margin: auto 0.2vw 1vh;
     background: rgba(60, 20, 95, 0.8);
     color: #fff8dc;
@@ -295,15 +305,16 @@ nav ul {
     box-shadow: 1.5px 1.5px 0px rgba(43, 14, 70, 0.9);
 }
 
-.movie-box h3, .synopsis-box h3 {
+.movie-box h3,
+.synopsis-box h3 {
     font-size: 30px;
-    color: rgb(220, 100, 140);
+    color: rgb(255, 255, 100);
 }
 
 .synopsis-box {
     width: 900px;
     max-width: 900px;
-    min-height: 507px;
+    padding-bottom: 8px;
     margin: auto 0.2vw 1vh;
     background: rgba(60, 20, 95, 0.8);
     color: #fff8dc;
@@ -311,6 +322,18 @@ nav ul {
     border-radius: 5px;
     border: 1.5px solid rgba(45, 15, 70, 0.9);
     box-shadow: 1.5px 1.5px 0px rgba(43, 14, 70, 0.9);
+}
+
+#synopsisACT,
+#synopsisRMC,
+#synopsisANM,
+#synopsisAHF,
+#bookingForm {
+    display: none;
+}
+
+.close-btn {
+    display: inline;
 }
 
 .synopsis-box h3 {
@@ -363,20 +386,20 @@ nav ul {
 }
 
 .synopsis-booking-column-1 {
-    width: 200px;
-    min-width: 200px;
-    max-width: 200px;
-    flex: 0 0 200px;
-    padding: 5px;
+    width: 135px;
+    min-width: 135px;
+    max-width: 135px;
+    flex: 0 0 135px;
+    padding: 5px 0px 5px 5px;
     word-wrap: break-word;
 }
 
 .synopsis-booking-column-2 {
-    width: 680px;
-    min-width: 680px;
-    max-width: 680px;
-    flex: 0 0 680px;
-    padding: 5px;
+    width: 755px;
+    min-width: 755px;
+    max-width: 755px;
+    flex: 0 0 755px;
+    padding: 5px 0px 5px 5px;
 }
 
 .synopsis-box-column-2 {
@@ -440,7 +463,8 @@ nav ul {
     height: 365px;
 }
 
-.movie-main button {
+.movie-main button,
+.form-control-btn {
     cursor: pointer;
     width: 258px;
     margin-left: auto;
@@ -464,21 +488,26 @@ nav ul {
     padding: 3px;
 }
 
-.movie-main button:hover, button:focus {
+.movie-main button:hover,
+.movie-main button:focus,
+.form-control-btn:hover,
+.form-control-btn:focus {
     background-color: rgb(241, 158, 183);
     color: rgb(60, 20, 90);
     box-shadow: 0 0 20px rgba(1, 1, 1, 0.5);
+}
+
+.movie-main button:active,
+.synopsis-booking-movie-info:active,
+.form-control-btn:active {
+    transform: translateY(4px);
 }
 
 .movie-btn-content {
     font-size: 18px;
 }
 
-.movie-main button:hover .movie-btn-content {
-    display: inline-block;
-    transform: scale(1.2);
-}
-
+.movie-main button:hover .movie-btn-content,
 .movie-main button:focus .movie-btn-content {
     display: inline-block;
     transform: scale(1.2);
@@ -521,6 +550,23 @@ nav ul {
     font-size: 14px;
 }
 
+.movie-time-text {
+    float: right;
+    padding: 3px;
+    border-radius: 5px;
+    text-align: center;
+    width: 75px;
+    border: rgb(255, 255, 100) dashed 1px;
+    text-transform: uppercase;
+    color: rgb(255, 255, 100);
+    font-weight: 700;
+    font-size: 16px;
+}
+
+.disabled-text {
+    display: none;
+}
+
 .synopsis-booking-movie-info {
     float: left;
     padding: 1px 1px;
@@ -560,6 +606,7 @@ nav ul {
     cursor: not-allowed;
     background-color: rgb(205, 205, 205);
     color: rgb(100, 100, 100);
+    display: none;
 }
 
 .disabled-btn:hover {
@@ -573,8 +620,6 @@ nav ul {
 }
 
 .movie-rating img {
-    margin-left: 110px;
-    margin-top: 112px;
     width: 45px;
     height: 45px;
 }
@@ -655,7 +700,8 @@ h2 {
     margin-bottom: 25px;
 }
 
-h2:before, h2:after {
+h2:before,
+h2:after {
     background-color: rgb(255, 255, 255);
     content: "";
     display: inline-block;
@@ -772,7 +818,8 @@ h2:after {
     box-shadow: inset 0 1px rgba(255, 255, 255, 0.5), inset 0 0 5px #d8e071, 0 0 1px rgba(0, 0, 0, 0.1), 0 2px rgba(0, 0, 0, 0.02);
 }
 
-.notepaper:before, .notepaper:after {
+.notepaper:before,
+.notepaper:after {
     content: '  ';
     position: absolute;
     top: 0;
@@ -805,7 +852,8 @@ h2:after {
     font-size: 15px;
 }
 
-.curly-quotes:before, .curly-quotes:after {
+.curly-quotes:before,
+.curly-quotes:after {
     display: inline-block;
     vertical-align: top;
     height: 30px;
@@ -881,7 +929,8 @@ h2:after {
     margin: 25px auto 15px auto;
 }
 
-.dolby-content h3, .dolby-content h4 {
+.dolby-content h3,
+.dolby-content h4 {
     text-align: center;
 }
 
@@ -934,7 +983,7 @@ h2:after {
 
 .dolby-container .dolby-box p {
     font-weight: 100;
-    font-size: 16px;
+    font-size: 15px;
 }
 
 div.caption {
@@ -991,8 +1040,189 @@ div.caption {
     #reverse-container {
         transform: rotate(180deg);
     }
+
     #reverse-container>div {
         margin: 0 auto;
         transform: rotate(-180deg);
     }
+}
+
+/* A3 form box */
+
+form {
+    max-width: 800px;
+    margin: 10px auto;
+    background: rgba(60, 20, 95, 0.8);
+    color: #fff8dc;
+    border-radius: 5px;
+    border: 1.5px solid rgba(45, 15, 70, 0.9);
+    box-shadow: 1.5px 1.5px 0px rgba(43, 14, 70, 0.9);
+}
+
+form h3 {
+    font-size: 30px;
+    color: rgb(255, 255, 100);
+    text-align: left;
+    margin: 10px;
+}
+
+.row {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    width: 100%;
+}
+
+.column {
+    display: flex;
+    flex-direction: column;
+    flex-basis: 100%;
+}
+
+fieldset {
+    margin: auto auto 15px auto;
+    padding: 10px 15px 10px 10px;
+    border-color: #fff8dc;
+}
+
+legend {
+    padding: 0 10px;
+    margin: auto auto auto 0;
+}
+
+.form-total-box {
+    margin: auto;
+    margin-bottom: 10px;
+    align-items: flex-end;
+}
+
+.form-total-box span {
+    border: white 1px dashed;
+    border-radius: 5px;
+    vertical-align: middle;
+    width: 150px;
+    height: 25px;
+    margin: auto auto auto 10px;
+    display: inline-block;
+    text-align: right;
+    padding: 0 10px;
+}
+
+select {
+    font-size: 16px;
+    font-weight: 700;
+    color: black;
+    padding: .2em 1.4em .1em .8em;
+    margin: auto auto auto 5px;
+    box-shadow: 0 1px 0 1px rgba(0, 0, 0, .04);
+    border: transparent;
+    border-radius: 5px;
+    background: rgb(220, 100, 140);
+}
+
+.form-control {
+    font-size: 16px;
+    font-weight: 700;
+    color: black;
+    border-radius: 5px;
+    padding: 2px 10px;
+    margin: 5px auto 5px 5px;
+}
+
+select:hover,
+select:focus {
+    background-color: rgb(240, 160, 180);
+    color: rgb(60, 20, 90);
+}
+
+select option {
+    font-weight: normal;
+}
+
+.form-total-label {
+    display: inline-block;
+}
+
+.form-total-display {
+    display: inline-block;
+}
+
+.form-group {
+    text-align: right;
+    font-size: 20px;
+    margin: auto;
+}
+
+.w1 {
+    width: 320px;
+}
+
+.w2 {
+    width: 360px;
+}
+
+.form-btn-container {
+    margin: 10px auto 15px auto;
+}
+
+.form-container {
+    margin: auto;
+}
+
+@media screen and (min-width: 768px) {
+    .column {
+        flex: 1
+    }
+}
+
+.form-error {
+    font-size: 12px;
+    color: salmon;
+}
+
+.seatsForm option {
+    min-width: 131px;
+}
+
+.code-section {
+    font-size: 12px;
+    background-color: rgb(234, 246, 246);
+}
+
+.data-section {
+    background-color: rgb(251, 253, 253);
+}
+
+table.tree tr>th {
+    background-color: #f5ebe1;
+}
+
+table.tree tr:nth-child(2n)>th {
+    background-color: #e2d9d0;
+}
+
+table.tree tr>td {
+    background-color: #fbfff4;
+}
+
+table.tree tr:nth-child(2n)>td {
+    background-color: #f1f7e7;
+}
+
+.data-table {
+    border-collapse: collapse;
+    border: 1px solid #333;
+}
+
+.data-table td,
+.data-table th {
+    border: 1px solid #999;
+    padding: 5px 10px;
+    border-collapse: collapse;
+    text-align: left;
+}
+
+.data-section,
+.code-section {
+   padding: 20px;
 }
