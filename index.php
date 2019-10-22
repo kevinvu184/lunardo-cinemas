@@ -1,3 +1,79 @@
+<?php
+include_once('tools.php');
+session_start();
+
+//only variable for preparing html pages kept in index.php
+$name = '';
+$nameError = '';
+$phone = '';
+$phoneError = '';
+$creditCard = '';
+$creditCardError = '';
+$email = '';
+$emailError = '';
+$expiryMonth = '';
+$expiryYear = '';
+$expiryError = '';
+$seatError = '';
+
+$_SESSION['cart'] = [];
+
+if (!empty($_POST)) {
+  
+  $expiryMonth = $_POST['cust']['expiryMonth'];
+  $expiryYear = $_POST['cust']['expiryYear'];
+
+  $errorFound = false;
+
+  validateExpiryDate($expiryMonth, $expiryYear, $errorFound, $expiryError);
+
+  //process valid post data for hidden field here
+  $movieID = $_POST['movie']['id'];
+  $synopsisID = '';
+
+  //set synopsis to display correct synopsis panel
+  if (validateMovieID($movieID, $errorFound)) {
+    $synopsisID = 'synopsis' . $movieID;
+  }
+
+  //validate movie day
+  $movieDay = $_POST['movie']['day'];
+  validateMovieDay($movieDay, $errorFound);
+
+  //validate movie hour
+  $movieHour = $_POST['movie']['hour'];
+  validateMovieHour($movieHour, $errorFound);
+
+  //validate seat range
+  $seatArray = $_POST['seats'];
+  validateSeat($seatArray, $seatError, $errorFound);
+
+  //validate name
+  $name = $_POST['cust']['name'];
+  validateName($name, $nameError, $errorFound);
+
+  //validate mobile
+  $phone = $_POST['cust']['mobile'];
+  validatePhone($phone, $phoneError, $errorFound);
+
+  //validate card
+  $creditCard = $_POST['cust']['card'];
+  validateCreditCard($creditCard, $creditCardError, $errorFound);
+
+  //validate email
+  $email = $_POST['cust']['email'];
+  validateEmail($email, $emailError, $errorFound);
+
+
+  //pass all validation direct to receipt page
+  if (!$errorFound) {
+    $_SESSION['cart'] = $_POST;
+    header('Location: ./receipt.php');
+  }
+  //end of post processing
+}
+?>
+
 <!DOCTYPE html>
 <html lang='en'>
 
@@ -10,8 +86,6 @@
   <title>Lunardo Cinemas | Welcome</title>
 
   <!-- Keep wireframe.css for debugging, add your css to style.css -->
-  <link id='wireframecss' type="text/css" rel="stylesheet" href="../wireframe.css" disabled>
-  <link id='stylecss' type="text/css" rel="stylesheet" href="../a2/style.css">
   <style>
     @import url('https://fonts.googleapis.com/css?family=Red+Hat+Text:400,500,700&display=swap');
   </style>
@@ -21,12 +95,14 @@
   <style>
     @import url('https://fonts.googleapis.com/css?family=Source+Sans+Pro&display=swap');
   </style>
-  <script src='../wireframe.js'></script>
-  <script src='../a3/updateSynopsisScript.js'></script>
-  <script src='../a3/updateBookingFormScript.js'></script>
-  <script src='../a3/submitBookingForm.js'></script>
 
-  <link rel="icon" href="../../media/lunardo_logo_icon.png" />
+  <link id='stylecss' type="text/css" rel="stylesheet" href="css/style.css">
+  
+  <script src='js/updateSynopsisScript.js'></script>
+  <script src='js/updateBookingFormScript.js'></script>
+  <script src='js/submitBookingForm.js'></script>
+
+  <link rel="icon" href="../media/lunardo_logo_icon.png" />
 </head>
 
 <body>
@@ -35,7 +111,7 @@
   <header>
     <div class="site-inner-header">
       <div class="logo-container">
-        <img src='../../media/lunardo_logo.png' alt='logo' />
+        <img src='../media/lunardo_logo.png' alt='logo' />
         <h1><span><span class="highlight-1">Lunar</span>do</span></h1>
       </div>
     </div>
@@ -84,11 +160,21 @@
 
         <div class="flex-container">
           <div class="box-content">
-            <h3 class="header-of-section"><span class="cross-word">WE DO NOT OFFER MOVIES</span> <span class="highlight-4 motto">WE OFFER EXPERIENCE</span></h3>
-            <p class="content-font">After extensive <span class="highlight-5">improvements</span> and <span class="highlight-5">rennovation</span> our cinema will reopen on <span class="highlight-5">30/08/2019</span>. Mark your calendar and join us enjoying your favorite movies with <span class="highlight-5">one-of-a-kind experience</span> at Lunardo. We guarantee to bring you the joyest experience that you have never experienced before.</p>
+            <h3 class="header-of-section">
+              <span class="cross-word">WE DO NOT OFFER MOVIES</span> <span class="highlight-4 motto">WE OFFER EXPERIENCE</span>
+            </h3>
+            <p class="content-font">
+              After extensive
+              <span class="highlight-5">improvements</span>
+              and <span class="highlight-5">rennovation</span>
+              our cinema will reopen on <span class="highlight-5">
+                30/08/2019</span>. Mark your calendar and join us enjoying your favorite movies with <span class="highlight-5">
+                one-of-a-kind experience</span>
+              at Lunardo. We guarantee to bring you the joyest experience that you have never experienced before.
+            </p>
           </div>
           <div class="box-img">
-            <img src=../../media/CinemaExperience_2.jpg alt="cinema experience" />
+            <img src=../media/CinemaExperience_2.jpg alt="cinema experience" />
           </div>
         </div>
 
@@ -99,7 +185,7 @@
 
           <div class="flex-container" id="reverse-container">
             <div class="box-img">
-              <img src=../../media/CinemaStandardSeat.jpg alt="cinema standard seat" />
+              <img src=../media/CinemaStandardSeat.jpg alt="cinema standard seat" />
             </div>
             <div class="box-content">
               <h3 class="title-box-1">Standard Seat</h3>
@@ -129,40 +215,52 @@
               </div>
             </div>
             <div class="box-img">
-              <img src=../../media/CinemaFirstClassSeat.jpg alt="cinema first class seat" />
+              <img src=../media/CinemaFirstClassSeat.jpg alt="cinema first class seat" />
             </div>
           </div>
         </div>
 
         <div class="dolby-content">
-          <h3><span class="content-title-1"><span class="highlight-4">Redefining</span> cinema experience</span> <span class="content-title-2">with our 3D Dolby Vision and Dolby Atmos system</span></h3>
+          <h3>
+            <span class="content-title-1"><span class="highlight-4">Redefining</span>
+              cinema experience</span> <span class="content-title-2">with our 3D Dolby Vision and Dolby Atmos system</span>
+          </h3>
           <div class="few-word">
-            <p class="content-font">With our new 3D Dolby Digital projector and Dolby Atmos, we proudly offer you the <span class="highlight-5">most authentic experience</span> that you will never forget</p>
+            <p class="content-font">
+              With our new 3D Dolby Digital projector and Dolby Atmos, we proudly offer you the
+              <span class="highlight-5">most authentic experience</span> that you will never forget
+            </p>
             <h4> Live in the film with 3D Dolby Digital Projector </h4>
           </div>
         </div>
 
         <div class="dolby-container">
           <div class="dolby-box">
-            <img src="../../media/3D_Dolby.jpg" alt="3D-Dolby" />
+            <img src="../media/3D_Dolby.jpg" alt="3D-Dolby" />
             <p class="content-font">Superior Picture Quality using the most advanced technology</p>
           </div>
           <div class="dolby-box">
-            <img src="../../media/3D_Dolby_Kids.jpg" alt="3D-Kids" />
+            <img src="../media/3D_Dolby_Kids.jpg" alt="3D-Kids" />
             <p class="content-font">Super Kid-friendly, making moviegoing more enjoyable and comfortable</p>
           </div>
         </div>
 
         <div class="flex-container">
-          <h3><span class="content-title-1"><span class="highlight-4">Surround</span> yourself</span> <span class="content-title-2">with the most astounding sound system</span></h3>
+          <h3>
+            <span class="content-title-1">
+              <span class="highlight-4">Surround</span> yourself</span>
+            <span class="content-title-2">with the most astounding sound system</span>
+          </h3>
           <div class="box-img-author box-img">
-            <img src="../../media/GeorgeLucas.jpg" alt="George-Lucas" />
+            <img src="../media/GeorgeLucas.jpg" alt="George-Lucas" />
           </div>
           <div class="box-content">
             <div class="notepaper">
               <figure class="quote">
                 <blockquote class="curly-quotes">
-                  Sound is 50 percent of the movie going experience, and I've always believed audiences are moved and excited by what they hear in my movies at least as much by what they see
+                  Sound is 50 percent of the movie going experience,
+                  and I've always believed audiences are moved and excited
+                  by what they hear in my movies at least as much by what they see
                 </blockquote>
                 <figcaption class="quote-by">-George Lucas-Director of StarTrek</figcaption>
               </figure>
@@ -172,7 +270,8 @@
 
         <div class="pannel-container">
           <div class="pannel-content">
-            <span>That's why</span>&#10;We use the state-of-the-art sound system <span class="highlight-3">embraced by many Hollywood film makers</span>.
+            <span>That's why</span>&#10;We use the state-of-the-art sound system
+            <span class="highlight-3">embraced by many Hollywood film makers</span>.
           </div>
         </div>
 
@@ -194,13 +293,15 @@
             <div class="movie-box-row">
               <div class="movie-box-column-1">
                 <div class="movie-main">
-                  <img src="../../media/avengers-poster-1.jpg" alt="movie-poster">
-                  <button id='buttonACT' class="movie-button" onclick='displaySynopsis()'><span class="movie-btn-content">Movie Info</span></button>
+                  <img src="../media/avengers-poster-1.jpg" alt="movie-poster">
+                  <button id='buttonACT' class="movie-button" onclick='displaySynopsis()'>
+                    <span class="movie-btn-content">Movie Info</span>
+                  </button>
                 </div>
               </div>
               <div class="movie-box-column-2">
                 <div class="movie-info-list">
-                  <div class="movie-rating"><img src="../../media/classification-m.svg" alt="m-movie-rating"></div>
+                  <div class="movie-rating"><img src="../media/classification-m.svg" alt="m-movie-rating"></div>
                   <div class="movie-info disabled-text"><span class="movie-date">Mon</span><span class="movie-time-text">N/A</span></div>
                   <div class="movie-info disabled-text"><span class="movie-date">Tue</span><span class="movie-time-text">N/A</span></div>
                   <div class="movie-info"><span class="movie-date">Wed</span><span class="movie-time-text">09:00PM</span></div>
@@ -218,13 +319,15 @@
             <div class="movie-box-row">
               <div class="movie-box-column-1">
                 <div class="movie-main">
-                  <img src="../../media/topendwedding-poster-1.jpg" alt="movie-poster">
-                  <button id='buttonRMC' class="movie-button" onclick='displaySynopsis()'><span class="movie-btn-content">Movie Info</span></button>
+                  <img src="../media/topendwedding-poster-1.jpg" alt="movie-poster">
+                  <button id='buttonRMC' class="movie-button" onclick='displaySynopsis()'>
+                    <span class="movie-btn-content">Movie Info</span>
+                  </button>
                 </div>
               </div>
               <div class="movie-box-column-2">
                 <div class="movie-info-list">
-                  <div class="movie-rating"><img src="../../media/classification-ma.svg" alt="ma-movie-rating"></div>
+                  <div class="movie-rating"><img src="../media/classification-ma.svg" alt="ma-movie-rating"></div>
                   <div class="movie-info"><span class="movie-date">Mon</span><span class="movie-time-text">06:00PM</span></div>
                   <div class="movie-info"><span class="movie-date">Tue</span><span class="movie-time-text">06:00PM</span></div>
                   <div class="movie-info disabled-text"><span class="movie-date">Wed</span><span class="movie-time-text">N/A</span></div>
@@ -242,13 +345,15 @@
             <div class="movie-box-row">
               <div class="movie-box-column-1">
                 <div class="movie-main">
-                  <img src="../../media/dumbo-poster-1.jpg" alt="movie-poster">
-                  <button id='buttonANM' class="movie-button" onclick='displaySynopsis()'><span class="movie-btn-content">Movie Info</span></button>
+                  <img src="../media/dumbo-poster-1.jpg" alt="movie-poster">
+                  <button id='buttonANM' class="movie-button" onclick='displaySynopsis()'>
+                    <span class="movie-btn-content">Movie Info</span>
+                  </button>
                 </div>
               </div>
               <div class="movie-box-column-2">
                 <div class="movie-info-list">
-                  <div class="movie-rating"><img src="../../media/classification-pg.svg" alt="pg-movie-rating"></div>
+                  <div class="movie-rating"><img src="../media/classification-pg.svg" alt="pg-movie-rating"></div>
                   <div class="movie-info"><span class="movie-date">Mon</span><span class="movie-time-text">12:00PM</span></div>
                   <div class="movie-info"><span class="movie-date">Tue</span><span class="movie-time-text">12:00PM</span></div>
                   <div class="movie-info"><span class="movie-date">Wed</span><span class="movie-time-text">06:00PM</span></div>
@@ -266,13 +371,15 @@
             <div class="movie-box-row">
               <div class="movie-box-column-1">
                 <div class="movie-main">
-                  <img src="../../media/thehappyprince-poster-1.jpg" alt="movie-poster">
-                  <button id='buttonAHF' class="movie-button" onclick="displaySynopsis()"><span class="movie-btn-content">Movie Info</span></button>
+                  <img src="../media/thehappyprince-poster-1.jpg" alt="movie-poster">
+                  <button id='buttonAHF' class="movie-button" onclick="displaySynopsis()">
+                    <span class="movie-btn-content">Movie Info</span>
+                  </button>
                 </div>
               </div>
               <div class="movie-box-column-2">
                 <div class="movie-info-list">
-                  <div class="movie-rating"><img src="../../media/classification-r.svg" alt="r-movie-rating"></div>
+                  <div class="movie-rating"><img src="../media/classification-r.svg" alt="r-movie-rating"></div>
                   <div class="movie-info disabled-text"><span class="movie-date">Mon</span><span class="movie-time-text">N/A</span></div>
                   <div class="movie-info disabled-text"><span class="movie-date">Tue</span><span class="movie-time-text">N/A</span></div>
                   <div class="movie-info"><span class="movie-date">Wed</span><span class="movie-time-text">12:00PM</span></div>
@@ -291,7 +398,7 @@
           <div class="synopsis-box" id='synopsisACT'>
             <a class="anchor" id="synopsisACT-anchor"></a>
             <div>
-              <h3><span>Avengers: Endgame</span><img src="../../media/classification-m.svg" alt="m-movie-rating"></h3>
+              <h3><span>Avengers: Endgame</span><img src="../media/classification-m.svg" alt="m-movie-rating"></h3>
             </div>
             <div class="synopsis-box-row">
               <div class="synopsis-box-column-1">
@@ -299,9 +406,17 @@
                   <div class="synopsis-plot-description">
                     Plot description
                   </div>
-                  <span class="content-font">Avengers: Endgame picks up after the events of Avengers: Infinity War, which saw the Avengers divided and defeated. Thanos won the day and used the Infinity Stones to snap away half of all life in the universe. Only the original Avengers - Iron Man, Captain America, Thor, Hulk, Black Widow, and Hawkeye remain, along with some key allies like War Machine, Ant-Man, Rocket Raccoon, Nebula, and Captain Marvel. Each of the survivors deals with the fallout from Thanos' decimation in different ways, but when an opportunity presents itself to potentially save those who vanished, they all come together and set out to defeat Thanos, once and for all.</span>
+                  <span class="content-font">Avengers: Endgame picks up after the events of Avengers: Infinity War,
+                    which saw the Avengers divided and defeated. Thanos won the day and used the
+                    Infinity Stones to snap away half of all life in the universe. Only the original Avengers - Iron Man,
+                    Captain America, Thor, Hulk, Black Widow, and Hawkeye remain, along with some key allies like War Machine,
+                    Ant-Man, Rocket Raccoon, Nebula, and Captain Marvel. Each of the survivors deals with the fallout from Thanos'
+                    decimation in different ways, but when an opportunity presents itself to potentially save those who vanished,
+                    they all come together and set out to defeat Thanos, once and for all.</span>
                   <div class="synopsis-plot-author">
-                    <em>&mdash;<a href="https://www.imdb.com/search/title/?plot_author=Santhosh&view=simple&sort=alpha&ref_=ttpl_pl_4">Santhosh</a></em>
+                    <em>&mdash;<a href="https://www.imdb.com/search/title/?plot_author=Santhosh&view=simple&sort=alpha&ref_=ttpl_pl_4">
+                        Santhosh
+                      </a></em>
                   </div>
                 </div>
               </div>
@@ -320,13 +435,29 @@
               <div class="synopsis-booking-column-2">
                 <div class="synopsis-booking-btn-list">
                   <div id='datetimeACT'>
-                    <div class="synopsis-booking-movie-info disabled-btn" onclick='updateBookingForm(); clearErrors(); setValueForMonth(); setValueForYear(); moveToBooking();'><span>Mon<span>N/A</span></span></div>
-                    <div class="synopsis-booking-movie-info disabled-btn" onclick='updateBookingForm(); clearErrors(); setValueForMonth(); setValueForYear(); moveToBooking()'><span>Tue<span>N/A</span></span></div>
-                    <div class="synopsis-booking-movie-info" onclick='updateBookingForm(); clearErrors(); setValueForMonth(); setValueForYear(); moveToBooking()'><span>Wed<span>09:00PM</span></span></div>
-                    <div class="synopsis-booking-movie-info" onclick='updateBookingForm(); clearErrors(); setValueForMonth(); setValueForYear(); moveToBooking()'><span>Thu<span>09:00PM</span></span></div>
-                    <div class="synopsis-booking-movie-info" onclick='updateBookingForm(); clearErrors(); setValueForMonth(); setValueForYear(); moveToBooking()'><span>Fri<span>09:00PM</span></span></div>
-                    <div class="synopsis-booking-movie-info" onclick='updateBookingForm(); clearErrors(); setValueForMonth(); setValueForYear(); moveToBooking()'><span>Sat<span>06:00PM</span></span></div>
-                    <div class="synopsis-booking-movie-info" onclick='updateBookingForm(); clearErrors(); setValueForMonth(); setValueForYear(); moveToBooking()'><span>Sun<span>06:00PM</span></span></div>
+                    <div class="synopsis-booking-movie-info disabled-btn" onclick='updateBookingForm(); 
+                    clearErrors(); setValueForMonth(); 
+                    setValueForYear(); moveToBooking();'><span>Mon<span>N/A</span></span></div>
+                    <div class="synopsis-booking-movie-info disabled-btn" onclick='updateBookingForm(); 
+                    clearErrors(); setValueForMonth(); 
+
+                    setValueForYea
+                    r(); moveToBooking()'><span>Tue<span>N/A</span></span></div>
+                    <div class="synopsis-booking-movie-info" onclick='updateBookingForm(); 
+                    clearErrors(); setValueForMonth(); 
+                    setValueForYear(); moveToBooking()'><span>Wed<span>09:00PM</span></span></div>
+                    <div class="synopsis-booking-movie-info" onclick='updateBookingForm(); 
+                    clearErrors(); setValueForMonth(); 
+                    setValueForYear(); moveToBooking()'><span>Thu<span>09:00PM</span></span></div>
+                    <div class="synopsis-booking-movie-info" onclick='updateBookingForm(); 
+                    clearErrors(); setValueForMonth(); 
+                    setValueForYear(); moveToBooking()'><span>Fri<span>09:00PM</span></span></div>
+                    <div class="synopsis-booking-movie-info" onclick='updateBookingForm(); 
+                    clearErrors(); setValueForMonth(); 
+                    setValueForYear(); moveToBooking()'><span>Sat<span>06:00PM</span></span></div>
+                    <div class="synopsis-booking-movie-info" onclick='updateBookingForm(); 
+                    clearErrors(); setValueForMonth(); 
+                    setValueForYear(); moveToBooking()'><span>Sun<span>06:00PM</span></span></div>
                   </div>
                 </div>
               </div>
@@ -336,7 +467,7 @@
           <div class="synopsis-box" id='synopsisRMC'>
             <a class="anchor" id="synopsisRMC-anchor"></a>
             <div>
-              <h3><span>Top End Wedding</span><img src="../../media/classification-ma.svg" alt="ma-movie-rating"></h3>
+              <h3><span>Top End Wedding</span><img src="../media/classification-ma.svg" alt="ma-movie-rating"></h3>
             </div>
             <div class="synopsis-box-row">
               <div class="synopsis-box-column-1">
@@ -344,9 +475,15 @@
                   <div class="synopsis-plot-description">
                     Plot description
                   </div>
-                  <span class="content-font">Lauren and Ned are engaged, they are in love, and they have just ten days to find Lauren's mother who has gone AWOL somewhere in the remote far north of Australia, reunite her parents and pull off their dream wedding. Lauren and Ned are engaged, they are in love, and they have just ten days to find Lauren's mother who has gone AWOL somewhere in the remote far north of Australia, reunite her parents and pull off their dream wedding.</span>
+                  <span class="content-font">Lauren and Ned are engaged, they are in love, and they have just ten
+                    days to find Lauren's mother who has gone AWOL somewhere in the remote far north of Australia,
+                    reunite her parents and pull off their dream wedding. Lauren and Ned are engaged, they are in love,
+                    and they have just ten days to find Lauren's mother who has gone AWOL somewhere in the remote far
+                    north of Australia, reunite her parents and pull off their dream wedding.</span>
                   <div class="synopsis-plot-author">
-                    <em>&mdash;<a href="/search/title?plot_author=Production&amp;view=simple&amp;sort=alpha&amp;ref_=ttpl_pl_0">Production</a></em>
+                    <em>&mdash;<a href="/search/title?plot_author=Production&amp;view=simple&amp;sort=alpha&amp;ref_=ttpl_pl_0">
+                        Production
+                      </a></em>
                   </div>
                 </div>
               </div>
@@ -365,13 +502,27 @@
               <div class="synopsis-booking-column-2">
                 <div class="synopsis-booking-btn-list">
                   <div id='datetimeRMC'>
-                    <div class="synopsis-booking-movie-info" onclick='updateBookingForm(); clearErrors(); setValueForMonth(); setValueForYear(); moveToBooking()'><span>Mon<span>06:00PM</span></span></div>
-                    <div class="synopsis-booking-movie-info" onclick='updateBookingForm(); clearErrors(); setValueForMonth(); setValueForYear(); moveToBooking()'><span>Tue<span>06:00PM</span></span></div>
-                    <div class="synopsis-booking-movie-info disabled-btn" onclick='updateBookingForm(); clearErrors(); setValueForMonth(); setValueForYear(); moveToBooking()'><span>Wed<span>N/A</span></span></div>
-                    <div class="synopsis-booking-movie-info disabled-btn" onclick='updateBookingForm(); clearErrors(); setValueForMonth(); setValueForYear(); moveToBooking()'><span>Thu<span>N/A</span></span></div>
-                    <div class="synopsis-booking-movie-info disabled-btn" onclick='updateBookingForm(); clearErrors(); setValueForMonth(); setValueForYear(); moveToBooking()'><span>Fri<span>N/A</span></span></div>
-                    <div class="synopsis-booking-movie-info" onclick='updateBookingForm(); clearErrors(); setValueForMonth(); setValueForYear(); moveToBooking()'><span>Sat<span>03:00PM</span></span></div>
-                    <div class="synopsis-booking-movie-info" onclick='updateBookingForm(); clearErrors(); setValueForMonth(); setValueForYear(); moveToBooking()'><span>Sun<span>03:00PM</span></span></div>
+                    <div class="synopsis-booking-movie-info" onclick='updateBookingForm(); 
+                    clearErrors(); setValueForMonth(); 
+                    setValueForYear(); moveToBooking()'><span>Mon<span>06:00PM</span></span></div>
+                    <div class="synopsis-booking-movie-info" onclick='updateBookingForm(); 
+                    clearErrors(); setValueForMonth(); 
+                    setValueForYear(); moveToBooking()'><span>Tue<span>06:00PM</span></span></div>
+                    <div class="synopsis-booking-movie-info disabled-btn" onclick='updateBookingForm(); 
+                    clearErrors(); setValueForMonth(); 
+                    setValueForYear(); moveToBooking()'><span>Wed<span>N/A</span></span></div>
+                    <div class="synopsis-booking-movie-info disabled-btn" onclick='updateBookingForm(); 
+                    clearErrors(); setValueForMonth(); 
+                    setValueForYear(); moveToBooking()'><span>Thu<span>N/A</span></span></div>
+                    <div class="synopsis-booking-movie-info disabled-btn" onclick='updateBookingForm(); 
+                    clearErrors(); setValueForMonth(); 
+                    setValueForYear(); moveToBooking()'><span>Fri<span>N/A</span></span></div>
+                    <div class="synopsis-booking-movie-info" onclick='updateBookingForm(); 
+                    clearErrors(); setValueForMonth(); 
+                    setValueForYear(); moveToBooking()'><span>Sat<span>03:00PM</span></span></div>
+                    <div class="synopsis-booking-movie-info" onclick='updateBookingForm(); 
+                    clearErrors(); setValueForMonth(); 
+                    setValueForYear(); moveToBooking()'><span>Sun<span>03:00PM</span></span></div>
                   </div>
                 </div>
               </div>
@@ -381,7 +532,7 @@
           <div class="synopsis-box" id='synopsisANM'>
             <a class="anchor" id="synopsisANM-anchor"></a>
             <div>
-              <h3><span>Dumbo</span><img src="../../media/classification-pg.svg" alt="pg-movie-rating"></h3>
+              <h3><span>Dumbo</span><img src="../media/classification-pg.svg" alt="pg-movie-rating"></h3>
             </div>
             <div class="synopsis-box-row">
               <div class="synopsis-box-column-1">
@@ -389,9 +540,17 @@
                   <div class="synopsis-plot-description">
                     Plot description
                   </div>
-                  <span class="content-font">Struggling circus owner Max Medici enlists former star Holt Farrier and his children Milly and Joe to care for Dumbo, a baby elephant whose oversized ears make him the circus' laughing stock. But when they discover that Dumbo can fly, the circus makes an incredible comeback, attracting persuasive entrepreneur V.A. Vandevere, who recruits Dumbo for his newest, larger-than-life entertainment venture, Dreamland. Dumbo soars to new heights alongside a charming and spectacular aerial artist, Colette Marchant, until Holt learns that Dreamland hides dark secrets beneath its shiny veneer.</span>
+                  <span class="content-font">Struggling circus owner Max Medici enlists former star Holt Farrier
+                    and his children Milly and Joe to care for Dumbo, a baby elephant whose oversized ears make him
+                    the circus' laughing stock. But when they discover that Dumbo can fly, the circus makes an incredible
+                    comeback, attracting persuasive entrepreneur V.A. Vandevere, who recruits Dumbo for his newest,
+                    larger-than-life entertainment venture, Dreamland. Dumbo soars to new heights alongside a charming and
+                    spectacular aerial artist, Colette Marchant, until Holt learns that Dreamland hides dark secrets beneath
+                    its shiny veneer.</span>
                   <div class="synopsis-plot-author">
-                    <em>&mdash;<a href="https://www.imdb.com/search/title/?plot_author=Santhosh&view=simple&sort=alpha&ref_=ttpl_pl_4">Santhosh</a></em>
+                    <em>&mdash;<a href="https://www.imdb.com/search/title/?plot_author=Santhosh&view=simple&sort=alpha&ref_=ttpl_pl_4">
+                        Santhosh
+                      </a></em>
                   </div>
                 </div>
               </div>
@@ -410,13 +569,27 @@
               <div class="synopsis-booking-column-2">
                 <div class="synopsis-booking-btn-list">
                   <div id='datetimeANM'>
-                    <div class="synopsis-booking-movie-info" onclick='updateBookingForm(); clearErrors(); setValueForMonth(); setValueForYear(); moveToBooking()'><span>Mon<span>12:00PM</span></span></div>
-                    <div class="synopsis-booking-movie-info" onclick='updateBookingForm(); clearErrors(); setValueForMonth(); setValueForYear(); moveToBooking()'><span>Tue<span>12:00PM</span></span></div>
-                    <div class="synopsis-booking-movie-info" onclick='updateBookingForm(); clearErrors(); setValueForMonth(); setValueForYear(); moveToBooking()'><span>Wed<span>06:00PM</span></span></div>
-                    <div class="synopsis-booking-movie-info" onclick='updateBookingForm(); clearErrors(); setValueForMonth(); setValueForYear(); moveToBooking()'><span>Thu<span>06:00PM</span></span></div>
-                    <div class="synopsis-booking-movie-info" onclick='updateBookingForm(); clearErrors(); setValueForMonth(); setValueForYear(); moveToBooking()'><span>Fri<span>06:00PM</span></span></div>
-                    <div class="synopsis-booking-movie-info" onclick='updateBookingForm(); clearErrors(); setValueForMonth(); setValueForYear(); moveToBooking()'><span>Sat<span>12:00PM</span></span></div>
-                    <div class="synopsis-booking-movie-info" onclick='updateBookingForm(); clearErrors(); setValueForMonth(); setValueForYear(); moveToBooking()'><span>Sun<span>12:00PM</span></span></div>
+                    <div class="synopsis-booking-movie-info" onclick='updateBookingForm(); 
+                    clearErrors(); setValueForMonth(); 
+                    setValueForYear(); moveToBooking()'><span>Mon<span>12:00PM</span></span></div>
+                    <div class="synopsis-booking-movie-info" onclick='updateBookingForm(); 
+                    clearErrors(); setValueForMonth(); 
+                    setValueForYear(); moveToBooking()'><span>Tue<span>12:00PM</span></span></div>
+                    <div class="synopsis-booking-movie-info" onclick='updateBookingForm(); 
+                    clearErrors(); setValueForMonth(); 
+                    setValueForYear(); moveToBooking()'><span>Wed<span>06:00PM</span></span></div>
+                    <div class="synopsis-booking-movie-info" onclick='updateBookingForm(); 
+                    clearErrors(); setValueForMonth(); 
+                    setValueForYear(); moveToBooking()'><span>Thu<span>06:00PM</span></span></div>
+                    <div class="synopsis-booking-movie-info" onclick='updateBookingForm(); 
+                    clearErrors(); setValueForMonth(); 
+                    setValueForYear(); moveToBooking()'><span>Fri<span>06:00PM</span></span></div>
+                    <div class="synopsis-booking-movie-info" onclick='updateBookingForm(); 
+                    clearErrors(); setValueForMonth(); 
+                    setValueForYear(); moveToBooking()'><span>Sat<span>12:00PM</span></span></div>
+                    <div class="synopsis-booking-movie-info" onclick='updateBookingForm(); 
+                    clearErrors(); setValueForMonth(); 
+                    setValueForYear(); moveToBooking()'><span>Sun<span>12:00PM</span></span></div>
                   </div>
                 </div>
               </div>
@@ -426,7 +599,7 @@
           <div class="synopsis-box" id='synopsisAHF'>
             <a class="anchor" id="synopsisAHF-anchor"></a>
             <div>
-              <h3><span>The Happy Prince</span><img src="../../media/classification-r.svg" alt="r-movie-rating"></h3>
+              <h3><span>The Happy Prince</span><img src="../media/classification-r.svg" alt="r-movie-rating"></h3>
             </div>
             <div class="synopsis-box-row">
               <div class="synopsis-box-column-1">
@@ -434,7 +607,10 @@
                   <div class="synopsis-plot-description">
                     Plot description
                   </div>
-                  <span class="content-font">In a cheap Parisian hotel room Oscar Wilde lies on his death bed. The past floods back, taking him to other times and places. In a cheap Parisian hotel room Oscar Wilde lies on his death bed. The past floods back, taking him to other times and places. In a cheap Parisian hotel room Oscar Wilde lies on his death bed. The past floods back, taking him to other times and places.</span>
+                  <span class="content-font">In a cheap Parisian hotel room Oscar Wilde lies on his death bed. The past
+                    floods back, taking him to other times and places. In a cheap Parisian hotel room Oscar Wilde lies on
+                    his death bed. The past floods back, taking him to other times and places. In a cheap Parisian hotel room
+                    Oscar Wilde lies on his death bed. The past floods back, taking him to other times and places.</span>
                   <div class="synopsis-plot-author">
                     <em>&mdash;<a href="https://www.betafilm.com/en/product/d/the-happy-prince.html">Beta Film GmbH</a></em>
                   </div>
@@ -455,13 +631,27 @@
               <div class="synopsis-booking-column-2">
                 <div class="synopsis-booking-btn-list">
                   <div id='datetimeAHF'>
-                    <div class="synopsis-booking-movie-info disabled-btn" onclick='updateBookingForm(); clearErrors(); setValueForMonth(); setValueForYear(); moveToBooking()'><span>Mon<span>N/A</span></span></div>
-                    <div class="synopsis-booking-movie-info disabled-btn" onclick='updateBookingForm(); clearErrors(); setValueForMonth(); setValueForYear(); moveToBooking()'><span>Tue<span>N/A</span></span></div>
-                    <div class="synopsis-booking-movie-info" onclick='updateBookingForm(); clearErrors(); setValueForMonth(); setValueForYear(); moveToBooking()'><span>Wed<span>12:00PM</span></span></div>
-                    <div class="synopsis-booking-movie-info" onclick='updateBookingForm(); clearErrors(); setValueForMonth(); setValueForYear(); moveToBooking()'><span>Thu<span>12:00PM</span></span></div>
-                    <div class="synopsis-booking-movie-info" onclick='updateBookingForm(); clearErrors(); setValueForMonth(); setValueForYear(); moveToBooking()'><span>Fri<span>12:00PM</span></span></div>
-                    <div class="synopsis-booking-movie-info" onclick='updateBookingForm(); clearErrors(); setValueForMonth(); setValueForYear(); moveToBooking()'><span>Sat<span>09:00PM</span></span></div>
-                    <div class="synopsis-booking-movie-info" onclick='updateBookingForm(); clearErrors(); setValueForMonth(); setValueForYear(); moveToBooking()'><span>Sun<span>09:00PM</span></span></div>
+                    <div class="synopsis-booking-movie-info disabled-btn" onclick='updateBookingForm(); 
+                    clearErrors(); setValueForMonth(); 
+                    setValueForYear(); moveToBooking()'><span>Mon<span>N/A</span></span></div>
+                    <div class="synopsis-booking-movie-info disabled-btn" onclick='updateBookingForm(); 
+                    clearErrors(); setValueForMonth(); 
+                    setValueForYear(); moveToBooking()'><span>Tue<span>N/A</span></span></div>
+                    <div class="synopsis-booking-movie-info" onclick='updateBookingForm(); 
+                    clearErrors(); setValueForMonth(); 
+                    setValueForYear(); moveToBooking()'><span>Wed<span>12:00PM</span></span></div>
+                    <div class="synopsis-booking-movie-info" onclick='updateBookingForm(); 
+                    clearErrors(); setValueForMonth(); 
+                    setValueForYear(); moveToBooking()'><span>Thu<span>12:00PM</span></span></div>
+                    <div class="synopsis-booking-movie-info" onclick='updateBookingForm(); 
+                    clearErrors(); setValueForMonth(); 
+                    setValueForYear(); moveToBooking()'><span>Fri<span>12:00PM</span></span></div>
+                    <div class="synopsis-booking-movie-info" onclick='updateBookingForm(); 
+                    clearErrors(); setValueForMonth(); 
+                    setValueForYear(); moveToBooking()'><span>Sat<span>09:00PM</span></span></div>
+                    <div class="synopsis-booking-movie-info" onclick='updateBookingForm(); 
+                    clearErrors(); setValueForMonth(); 
+                    setValueForYear(); moveToBooking()'><span>Sun<span>09:00PM</span></span></div>
                   </div>
                 </div>
               </div>
@@ -469,7 +659,16 @@
           </div>
         </div>
 
-        <form id='bookingForm' action="https://titan.csit.rmit.edu.au/~e54061/wp/lunardo-formtest.php" method="POST" onsubmit="return formValidate();">
+        <!--state programming -->
+        <?php
+        if (!empty($_POST)) {
+          echo "<script>\n";
+          echo "displaySynopsisState(\"$synopsisID\");\n";
+          echo "</script>\n\n";
+        }
+        ?>
+
+        <form id='bookingForm' action="index.php#booking-anchor" method="POST" onsubmit="return formValidate();">
           <a class="anchor" id="booking-anchor"></a>
           <h3 id='bookingFormHeading'>Movie Title - Day - Time</h3>
           <input type="hidden" name="movie[id]" id="movie-id" value="">
@@ -501,12 +700,12 @@
                 <legend>First Class</legend>
                 <div class="form-group w1">
                   <label for="seats-FCA">Adults</label>
-                  <select name="seats[FCA]" id="seats-FCA" class='seatsForm' onchange="calcPrice(); ">
+                  <select name="seats[FCA]" id="seats-FCA" class='seatsForm' onchange="calcPrice();">
                   </select>
                 </div>
                 <div class="form-group w1">
                   <label for="seats-FCP">Concession</label>
-                  <select name="seats[FCP]" id="seats-FCP" class='seatsForm' onchange="calcPrice(); ">
+                  <select name="seats[FCP]" id="seats-FCP" class='seatsForm' onchange="calcPrice();">
                   </select>
                 </div>
                 <div class="form-group w1">
@@ -519,38 +718,38 @@
               <div class="form-total-box">
                 <label>Total $ </label>
                 <span id='finalPrice'>0.00 $</span>
-                <div class='errors' id='seatError'></div>
+                <?php echo $seatError; ?>
               </div>
             </div>
             <div class="column">
               <div class="form-container">
                 <div class="form-group w2">
                   <label class="form-label" for="cust-name">Name</label>
-                  <input class="form-control" type="text" placeholder="Enter your name" name="cust[name]" id="cust-name">
-                  <span class='errors' id='nameError'></span>
+                  <input class="form-control" type="text" placeholder="Enter your name" name="cust[name]" id="cust-name" value='<?php echo $name; ?>'>
+                  <?php echo $nameError; ?>
                 </div>
                 <div class="form-group w2">
                   <label class="form-label" for="cust-email">Email</label>
-                  <input class="form-control" type="email" placeholder="Enter your email" name="cust[email]" id="cust-email">
-                  <span class='errors' id='emailError'></span>
+                  <input class="form-control"  type="email" placeholder="Enter your email" name="cust[email]" id="cust-email" value='<?php echo $email; ?>'>
+                  <?php echo $emailError; ?>
                 </div>
                 <div class="form-group w2">
                   <label class="form-label" for="cust-mobile">Mobile</label>
-                  <input class="form-control" type="tel" placeholder="Enter your phone number" name="cust[mobile]" id="cust-mobile">
-                  <span class='errors' id='mobileError'></span>
+                  <input class="form-control" type="tel" placeholder="Enter your phone number" name="cust[mobile]" id="cust-mobile" value='<?php echo $phone; ?>'>
+                  <?php echo $phoneError; ?>
                 </div>
                 <div class="form-group w2">
                   <label class="form-label" for="cust-card">Credit Card</label>
-                  <input class="form-control" type="text" placeholder="Enter Card Number" name="cust[card]" id="cust-card">
-                  <span class='errors' id='cardError'></span>
+                  <input class="form-control" type="text" placeholder="Enter Card Number" name="cust[card]" id="cust-card" value='<?php echo $creditCard; ?>'>
+                  <?php echo $creditCardError; ?>
                 </div>
                 <div class="form-group w2">
                   <label class="form-label">Expiry</label>
-                  <select name="cust[expiryMonth]" id="cust-expiryMonth" onchange="limitYear()">
+                  <select name="cust[expiryMonth]" id="cust-expiryMonth" onchange="limitYear()" value='<?php echo $expiryMonth; ?>'>
                   </select>
-                  <select name="cust[expiryYear]" id="cust-expiryYear" onchange="limitMonth()">
+                  <select name="cust[expiryYear]" id="cust-expiryYear" onchange="limitMonth()" value='<?php echo $expiryYear; ?>'>
                   </select>
-                  <span class='errors' id='expiryError'></span>
+                  <?php echo $expiryError; ?>
                 </div>
               </div>
               <div class="form-btn-container">
@@ -559,6 +758,18 @@
             </div>
           </div>
         </form>
+        <?php
+        if (!empty($_POST)) {
+          $title = "datetime" . $_POST['movie']['id'];
+          $day = $_POST['movie']['day'];
+          $hour = $_POST['movie']['hour'];
+          echo "\n\n<script>\n";
+          echo "updateBookingFormState(\"$title\", \"$day\", \"$hour\")\n";
+          echo "setValueForYear()\n";
+          echo "setValueForMonth()\n";
+          echo "</script>\n\n";
+        }
+        ?>
       </div>
     </section>
     <!-- End of now-showing -->
@@ -620,12 +831,20 @@
   <footer>
     <div class="contact-info">
       <div class="contact-info-column">
-        <p><img src="../../media/mail.svg" alt="mail" /><span class="contact-field">Email:</span><a href="mailto:lunardo@example.com"> lunardo@example.com</a>.</p>
-        <p><img src="../../media/phone.svg" alt="phone" /><span class="contact-field">Phone:</span><a href="tel:012-345-6789"> +012-345-6789</a>.</p>
+        <p><img src="../media/mail.svg" alt="mail" />
+          <span class="contact-field">Email:</span><a href="mailto:lunardo@example.com"> lunardo@example.com</a>.
+        </p>
+        <p><img src="../media/phone.svg" alt="phone" />
+          <span class="contact-field">Phone:</span><a href="tel:012-345-6789"> +012-345-6789</a>.
+        </p>
       </div>
       <div class="contact-info-column">
-        <p><img src="../../media/location.svg" alt="location" /><span class="contact-field">Address:</span> 1 Lunar Street, VIC, Melbourne.</p>
-        <p><img src="../../media/plane.svg" alt="github" /><span class="contact-field">GitHub:</span><a href="https://github.com/s3678491/wp"> Go-to-GitHub</a>.</p>
+        <p><img src="../media/location.svg" alt="location" />
+          <span class="contact-field">Address:</span> 1 Lunar Street, VIC, Melbourne.
+        </p>
+        <p><img src="../media/plane.svg" alt="github" />
+          <span class="contact-field">GitHub:</span><a href="#"> Go-to-GitHub</a>.
+        </p>
       </div>
     </div>
 
@@ -634,21 +853,26 @@
         &copy;
         <script>
           document.write(new Date().getFullYear());
-        </script>Tuan Vu - S3678491/Khoa Vu - S3678490. Last modified <?= date("Y F d  H:i", filemtime($_SERVER['SCRIPT_FILENAME'])); ?>.
+        </script>Tuan Vu - S3678491/Khoa Vu - S3678490. Last modified
+        <?= date("Y F d  H:i", filemtime($_SERVER['SCRIPT_FILENAME'])); ?>.
       </div>
 
       <div>
-        Disclaimer: This website is not a real website and is being developed as part of a School of Science Web Programming course at RMIT University in Melbourne, Australia.
-      </div>
-
-      <div>
-        <button id='toggleWireframeCSS' onclick='toggleWireframe()'>Toggle Wireframe CSS</button>
+        Disclaimer: This website is not a real website and is being developed as part of a
+        School of Science Web Programming course at RMIT University in Melbourne, Australia.
       </div>
     </div>
   </footer>
   <!-- End of footer -->
 
-  <script src="../a3/navProgrammingScript.js"></script>
+  <script src="js/navProgrammingScript.js"></script>
 </body>
 
 </html>
+
+<?php
+// table('POST Data', $_POST);
+// table('GET Data', $_GET);
+// table('SESSION[\'cart\'] Data', $_SESSION['cart']);
+// debugModule();
+?>

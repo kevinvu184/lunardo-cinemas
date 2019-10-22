@@ -34,7 +34,6 @@ if (!empty($_SESSION['cart'])) {
 
     <title>Lunardo Cinemas | Invoice</title>
 
-    <link id='stylecss' type="text/css" rel="stylesheet" href="../a4/style.css">
     <style>
         @import url('https://fonts.googleapis.com/css?family=Red+Hat+Text:400,500,700&display=swap');
     </style>
@@ -45,7 +44,8 @@ if (!empty($_SESSION['cart'])) {
         @import url('https://fonts.googleapis.com/css?family=Source+Sans+Pro&display=swap');
     </style>
 
-    <link rel="icon" href="../../media/lunardo_logo_icon.png" />
+    <link id='stylecss' type="text/css" rel="stylesheet" href="css/receipt.css">
+    <link rel="icon" href="../media/lunardo_logo_icon.png" />
 </head>
 
 <body>
@@ -55,7 +55,7 @@ if (!empty($_SESSION['cart'])) {
         <section id="company-detail">
             <h3>Company Details</h3>
             <div><span class="title">Lunardo Cinemas<span></div>
-            <div><a href="https://titan.csit.rmit.edu.au/~s3678491/wp/a4/index.php">lunardo.com</a></div>
+            <div><a href="#">lunardo.com</a></div>
             <div><a href="tel:012-345-6789">+012-345-6789</a></div>
             <div><a href="mailto:lunardo@example.com">lunardo@example.com</a></div>
             <div>1 Lunar Street, VIC, Melbourne</div>
@@ -93,8 +93,8 @@ if (!empty($_SESSION['cart'])) {
                             <th class="" scope="row"><?php echo movieDes($code); ?></th>
                             <td class=""><?php echo htmlspecialchars($_SESSION['cart']['seats'][$code] ?: 0); ?></td>
                             <td class="">$ <?php echo movieUnitPrice($code, $day, $hour); ?></td>
-                            <td class="">$ <?php $total = (float)($_SESSION['cart']['seats'][$code] ?: 0) * movieUnitPrice($code, $day, $hour);
-                                            echo number_format($total, 2); ?></td>
+                            <td class="">$ <?php $total = (float) ($_SESSION['cart']['seats'][$code] ?: 0) * movieUnitPrice($code, $day, $hour);
+                                                echo number_format($total, 2); ?></td>
                         </tr>
                         <?php $subtotal += $total; ?>
                     <?php endforeach; ?>
@@ -135,7 +135,7 @@ if (!empty($_SESSION['cart'])) {
         <?php while ($count > 0) : ?>
             <section class="ticket">
                 <div class="row">
-                    <div class="left"><img src='../../media/lunardo_logo.png' alt='logo' /></div>
+                    <div class="left"><img src='../media/lunardo_logo.png' alt='logo' /></div>
                     <div class="right">
                         <div><span class="ticket-content">Ticket #<?php echo $ticket_no++; ?> // <?php echo movieDes($code); ?></span></div>
                         <div class="movie-title"><span><?php echo htmlspecialchars($id); ?></span></div>
@@ -164,12 +164,12 @@ foreach ($GLOBALS['formatSeat'] as $code => $qty) {
 
 $cells = array_merge(
     [$now],
-    (array)$name,
-    (array)$email,
-    (array)$mobile,
+    (array) $name,
+    (array) $email,
+    (array) $mobile,
     $_SESSION['cart']['movie'],
     $GLOBALS['formatSeat'],
-    (array)('$' . number_format($subtotal, 2))
+    (array) ('$' . number_format($subtotal, 2))
 );
 $cart = $_SESSION['cart'];
 $fp = fopen('bookings.txt', 'a');
@@ -179,8 +179,8 @@ fclose($fp);
 //destroy session after ordering ticket
 session_destroy();
 
-table('POST Data', $_POST);
-table('GET Data', $_GET);
-table('SESSION[\'cart\'] Data', $_SESSION['cart']);
-debugModule();
+// table('POST Data', $_POST);
+// table('GET Data', $_GET);
+// table('SESSION[\'cart\'] Data', $_SESSION['cart']);
+// debugModule();
 ?>
