@@ -23,5 +23,3 @@ The client expects to have a grand reopening in a few months’ time (ie around 
 - Back end: PHP
 - DB: Textbase
 - Deploy Platform: GAE (Google App Engine)
-
-## Web Images
