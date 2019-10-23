@@ -16,7 +16,7 @@ body {
     font-family: 'Red Hat Text', Arial, Helvetica, sans-serif;
     font-size: 16px;
     line-height: 1.5;
-    background: linear-gradient(to left, rgba(220, 100, 140, 0.9), rgba(15, 15, 120, 0.8), rgba(60, 20, 95, 0.9)), url(../../media/background.jpg);
+    background: linear-gradient(to left, rgba(220, 100, 140, 0.9), rgba(15, 15, 120, 0.8), rgba(60, 20, 95, 0.9)), url(background.jpg);
 }
 
 .container {
@@ -129,7 +129,7 @@ nav ul {
 }
 
 .secondary-background {
-    background-image: linear-gradient(90deg, rgba(220, 100, 140, 0.3) 0%, rgba(15, 15, 120, 0.3) 40%, rgba(60, 20, 90, 0.3) 100%), url(../../media/avengers-large.jpg);
+    background-image: linear-gradient(90deg, rgba(220, 100, 140, 0.3) 0%, rgba(15, 15, 120, 0.3) 40%, rgba(60, 20, 90, 0.3) 100%), url(avengers-large.jpg);
 }
 
 #slogan {
@@ -155,23 +155,23 @@ nav ul {
 
 @keyframes slider {
     0% {
-        background-image: linear-gradient(90deg, rgba(220, 100, 140, 0.3) 0%, rgba(15, 15, 120, 0.3) 40%, rgba(60, 20, 90, 0.3) 100%), url(../../media/avengers-large.jpg);
+        background-image: linear-gradient(90deg, rgba(220, 100, 140, 0.3) 0%, rgba(15, 15, 120, 0.3) 40%, rgba(60, 20, 90, 0.3) 100%), url(avengers-large.jpg);
     }
 
     25% {
-        background-image: linear-gradient(90deg, rgba(220, 100, 140, 0.3) 0%, rgba(15, 15, 120, 0.3) 40%, rgba(60, 20, 90, 0.3) 100%), url(../../media/top-end-wedding-large.jpg);
+        background-image: linear-gradient(90deg, rgba(220, 100, 140, 0.3) 0%, rgba(15, 15, 120, 0.3) 40%, rgba(60, 20, 90, 0.3) 100%), url(top-end-wedding-large.jpg);
     }
 
     50% {
-        background-image: linear-gradient(90deg, rgba(220, 100, 140, 0.3) 0%, rgba(15, 15, 120, 0.3) 40%, rgba(60, 20, 90, 0.3) 100%), url(../../media/dumbo-large.jpg);
+        background-image: linear-gradient(90deg, rgba(220, 100, 140, 0.3) 0%, rgba(15, 15, 120, 0.3) 40%, rgba(60, 20, 90, 0.3) 100%), url(dumbo-large.jpg);
     }
 
     75% {
-        background-image: linear-gradient(90deg, rgba(220, 100, 140, 0.3) 0%, rgba(15, 15, 120, 0.3) 40%, rgba(60, 20, 90, 0.3) 100%), url(../../media/happy-prince-large.jpg)
+        background-image: linear-gradient(90deg, rgba(220, 100, 140, 0.3) 0%, rgba(15, 15, 120, 0.3) 40%, rgba(60, 20, 90, 0.3) 100%), url(happy-prince-large.jpg)
     }
 
     100% {
-        background-image: linear-gradient(90deg, rgba(220, 100, 140, 0.3) 0%, rgba(15, 15, 120, 0.3) 40%, rgba(60, 20, 90, 0.3) 100%), url(../../media/avengers-large.jpg);
+        background-image: linear-gradient(90deg, rgba(220, 100, 140, 0.3) 0%, rgba(15, 15, 120, 0.3) 40%, rgba(60, 20, 90, 0.3) 100%), url(avengers-large.jpg);
     }
 }
 
@@ -203,7 +203,7 @@ nav ul {
     background-repeat: no-repeat;
     background-size: cover;
     min-height: 90vh;
-    background-image: url(../../media/prices-background.gif);
+    background-image: url(prices-background.gif);
 }
 
 .prices-table {
@@ -213,7 +213,7 @@ nav ul {
 }
 
 .prices-table-body {
-    background: linear-gradient(to left, rgba(220, 100, 140, 0.9), rgba(15, 15, 120, 0.8), rgba(60, 20, 95, 0.9)), url(../../media/background.jpg);
+    background: linear-gradient(to left, rgba(220, 100, 140, 0.9), rgba(15, 15, 120, 0.8), rgba(60, 20, 95, 0.9)), url(background.jpg);
     display: table-row-group;
 }
 
@@ -898,7 +898,7 @@ h2:after {
 
 .flex-container .image-list {
     line-height: 1.5em;
-    list-style-image: url(../../media/star.svg) !important;
+    list-style-image: url(star.svg) !important;
 }
 
 .flex-container ul {
@@ -1000,7 +1000,7 @@ div.caption {
 }
 
 .pannel-container {
-    background-image: url(../../media/DolbySound.jpg);
+    background-image: url(DolbySound.jpg);
     background-position: center center;
     background-repeat: no-repeat;
     background-size: cover;

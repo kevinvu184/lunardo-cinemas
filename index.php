@@ -68,7 +68,7 @@ if (!empty($_POST)) {
   //pass all validation direct to receipt page
   if (!$errorFound) {
     $_SESSION['cart'] = $_POST;
-    header('Location: ./receipt.php');
+    header('Location: ./receipt');
   }
   //end of post processing
 }
@@ -96,13 +96,13 @@ if (!empty($_POST)) {
     @import url('https://fonts.googleapis.com/css?family=Source+Sans+Pro&display=swap');
   </style>
 
-  <link id='stylecss' type="text/css" rel="stylesheet" href="css/style.css">
+  <link id='stylecss' type="text/css" rel="stylesheet" href="./static/style.css">
   
-  <script src='js/updateSynopsisScript.js'></script>
-  <script src='js/updateBookingFormScript.js'></script>
-  <script src='js/submitBookingForm.js'></script>
+  <script src='./static/updateSynopsisScript.js'></script>
+  <script src='./static/updateBookingFormScript.js'></script>
+  <script src='./static/submitBookingForm.js'></script>
 
-  <link rel="icon" href="../media/lunardo_logo_icon.png" />
+  <link rel="icon" href="./static/lunardo_logo_icon.png" />
 </head>
 
 <body>
@@ -111,7 +111,7 @@ if (!empty($_POST)) {
   <header>
     <div class="site-inner-header">
       <div class="logo-container">
-        <img src='../media/lunardo_logo.png' alt='logo' />
+        <img src='./static/lunardo_logo.png' alt='logo' />
         <h1><span><span class="highlight-1">Lunar</span>do</span></h1>
       </div>
     </div>
@@ -174,7 +174,7 @@ if (!empty($_POST)) {
             </p>
           </div>
           <div class="box-img">
-            <img src=../media/CinemaExperience_2.jpg alt="cinema experience" />
+            <img src=./static/CinemaExperience_2.jpg alt="cinema experience" />
           </div>
         </div>
 
@@ -185,7 +185,7 @@ if (!empty($_POST)) {
 
           <div class="flex-container" id="reverse-container">
             <div class="box-img">
-              <img src=../media/CinemaStandardSeat.jpg alt="cinema standard seat" />
+              <img src=./static/CinemaStandardSeat.jpg alt="cinema standard seat" />
             </div>
             <div class="box-content">
               <h3 class="title-box-1">Standard Seat</h3>
@@ -215,7 +215,7 @@ if (!empty($_POST)) {
               </div>
             </div>
             <div class="box-img">
-              <img src=../media/CinemaFirstClassSeat.jpg alt="cinema first class seat" />
+              <img src=./static/CinemaFirstClassSeat.jpg alt="cinema first class seat" />
             </div>
           </div>
         </div>
@@ -236,11 +236,11 @@ if (!empty($_POST)) {
 
         <div class="dolby-container">
           <div class="dolby-box">
-            <img src="../media/3D_Dolby.jpg" alt="3D-Dolby" />
+            <img src="./static/3D_Dolby.jpg" alt="3D-Dolby" />
             <p class="content-font">Superior Picture Quality using the most advanced technology</p>
           </div>
           <div class="dolby-box">
-            <img src="../media/3D_Dolby_Kids.jpg" alt="3D-Kids" />
+            <img src="./static/3D_Dolby_Kids.jpg" alt="3D-Kids" />
             <p class="content-font">Super Kid-friendly, making moviegoing more enjoyable and comfortable</p>
           </div>
         </div>
@@ -252,7 +252,7 @@ if (!empty($_POST)) {
             <span class="content-title-2">with the most astounding sound system</span>
           </h3>
           <div class="box-img-author box-img">
-            <img src="../media/GeorgeLucas.jpg" alt="George-Lucas" />
+            <img src="./static/GeorgeLucas.jpg" alt="George-Lucas" />
           </div>
           <div class="box-content">
             <div class="notepaper">
@@ -293,7 +293,7 @@ if (!empty($_POST)) {
             <div class="movie-box-row">
               <div class="movie-box-column-1">
                 <div class="movie-main">
-                  <img src="../media/avengers-poster-1.jpg" alt="movie-poster">
+                  <img src="./static/avengers-poster-1.jpg" alt="movie-poster">
                   <button id='buttonACT' class="movie-button" onclick='displaySynopsis()'>
                     <span class="movie-btn-content">Movie Info</span>
                   </button>
@@ -301,7 +301,7 @@ if (!empty($_POST)) {
               </div>
               <div class="movie-box-column-2">
                 <div class="movie-info-list">
-                  <div class="movie-rating"><img src="../media/classification-m.svg" alt="m-movie-rating"></div>
+                  <div class="movie-rating"><img src="./static/classification-m.svg" alt="m-movie-rating"></div>
                   <div class="movie-info disabled-text"><span class="movie-date">Mon</span><span class="movie-time-text">N/A</span></div>
                   <div class="movie-info disabled-text"><span class="movie-date">Tue</span><span class="movie-time-text">N/A</span></div>
                   <div class="movie-info"><span class="movie-date">Wed</span><span class="movie-time-text">09:00PM</span></div>
@@ -319,7 +319,7 @@ if (!empty($_POST)) {
             <div class="movie-box-row">
               <div class="movie-box-column-1">
                 <div class="movie-main">
-                  <img src="../media/topendwedding-poster-1.jpg" alt="movie-poster">
+                  <img src="./static/topendwedding-poster-1.jpg" alt="movie-poster">
                   <button id='buttonRMC' class="movie-button" onclick='displaySynopsis()'>
                     <span class="movie-btn-content">Movie Info</span>
                   </button>
@@ -327,7 +327,7 @@ if (!empty($_POST)) {
               </div>
               <div class="movie-box-column-2">
                 <div class="movie-info-list">
-                  <div class="movie-rating"><img src="../media/classification-ma.svg" alt="ma-movie-rating"></div>
+                  <div class="movie-rating"><img src="./static/classification-ma.svg" alt="ma-movie-rating"></div>
                   <div class="movie-info"><span class="movie-date">Mon</span><span class="movie-time-text">06:00PM</span></div>
                   <div class="movie-info"><span class="movie-date">Tue</span><span class="movie-time-text">06:00PM</span></div>
                   <div class="movie-info disabled-text"><span class="movie-date">Wed</span><span class="movie-time-text">N/A</span></div>
@@ -345,7 +345,7 @@ if (!empty($_POST)) {
             <div class="movie-box-row">
               <div class="movie-box-column-1">
                 <div class="movie-main">
-                  <img src="../media/dumbo-poster-1.jpg" alt="movie-poster">
+                  <img src="./static/dumbo-poster-1.jpg" alt="movie-poster">
                   <button id='buttonANM' class="movie-button" onclick='displaySynopsis()'>
                     <span class="movie-btn-content">Movie Info</span>
                   </button>
@@ -353,7 +353,7 @@ if (!empty($_POST)) {
               </div>
               <div class="movie-box-column-2">
                 <div class="movie-info-list">
-                  <div class="movie-rating"><img src="../media/classification-pg.svg" alt="pg-movie-rating"></div>
+                  <div class="movie-rating"><img src="./static/classification-pg.svg" alt="pg-movie-rating"></div>
                   <div class="movie-info"><span class="movie-date">Mon</span><span class="movie-time-text">12:00PM</span></div>
                   <div class="movie-info"><span class="movie-date">Tue</span><span class="movie-time-text">12:00PM</span></div>
                   <div class="movie-info"><span class="movie-date">Wed</span><span class="movie-time-text">06:00PM</span></div>
@@ -371,7 +371,7 @@ if (!empty($_POST)) {
             <div class="movie-box-row">
               <div class="movie-box-column-1">
                 <div class="movie-main">
-                  <img src="../media/thehappyprince-poster-1.jpg" alt="movie-poster">
+                  <img src="./static/thehappyprince-poster-1.jpg" alt="movie-poster">
                   <button id='buttonAHF' class="movie-button" onclick="displaySynopsis()">
                     <span class="movie-btn-content">Movie Info</span>
                   </button>
@@ -379,7 +379,7 @@ if (!empty($_POST)) {
               </div>
               <div class="movie-box-column-2">
                 <div class="movie-info-list">
-                  <div class="movie-rating"><img src="../media/classification-r.svg" alt="r-movie-rating"></div>
+                  <div class="movie-rating"><img src="./static/classification-r.svg" alt="r-movie-rating"></div>
                   <div class="movie-info disabled-text"><span class="movie-date">Mon</span><span class="movie-time-text">N/A</span></div>
                   <div class="movie-info disabled-text"><span class="movie-date">Tue</span><span class="movie-time-text">N/A</span></div>
                   <div class="movie-info"><span class="movie-date">Wed</span><span class="movie-time-text">12:00PM</span></div>
@@ -398,7 +398,7 @@ if (!empty($_POST)) {
           <div class="synopsis-box" id='synopsisACT'>
             <a class="anchor" id="synopsisACT-anchor"></a>
             <div>
-              <h3><span>Avengers: Endgame</span><img src="../media/classification-m.svg" alt="m-movie-rating"></h3>
+              <h3><span>Avengers: Endgame</span><img src="./static/classification-m.svg" alt="m-movie-rating"></h3>
             </div>
             <div class="synopsis-box-row">
               <div class="synopsis-box-column-1">
@@ -467,7 +467,7 @@ if (!empty($_POST)) {
           <div class="synopsis-box" id='synopsisRMC'>
             <a class="anchor" id="synopsisRMC-anchor"></a>
             <div>
-              <h3><span>Top End Wedding</span><img src="../media/classification-ma.svg" alt="ma-movie-rating"></h3>
+              <h3><span>Top End Wedding</span><img src="./static/classification-ma.svg" alt="ma-movie-rating"></h3>
             </div>
             <div class="synopsis-box-row">
               <div class="synopsis-box-column-1">
@@ -532,7 +532,7 @@ if (!empty($_POST)) {
           <div class="synopsis-box" id='synopsisANM'>
             <a class="anchor" id="synopsisANM-anchor"></a>
             <div>
-              <h3><span>Dumbo</span><img src="../media/classification-pg.svg" alt="pg-movie-rating"></h3>
+              <h3><span>Dumbo</span><img src="./static/classification-pg.svg" alt="pg-movie-rating"></h3>
             </div>
             <div class="synopsis-box-row">
               <div class="synopsis-box-column-1">
@@ -599,7 +599,7 @@ if (!empty($_POST)) {
           <div class="synopsis-box" id='synopsisAHF'>
             <a class="anchor" id="synopsisAHF-anchor"></a>
             <div>
-              <h3><span>The Happy Prince</span><img src="../media/classification-r.svg" alt="r-movie-rating"></h3>
+              <h3><span>The Happy Prince</span><img src="./static/classification-r.svg" alt="r-movie-rating"></h3>
             </div>
             <div class="synopsis-box-row">
               <div class="synopsis-box-column-1">
@@ -668,7 +668,7 @@ if (!empty($_POST)) {
         }
         ?>
 
-        <form id='bookingForm' action="index.php#booking-anchor" method="POST" onsubmit="return formValidate();">
+        <form id='bookingForm' action="index#booking-anchor" method="POST" onsubmit="return formValidate();">
           <a class="anchor" id="booking-anchor"></a>
           <h3 id='bookingFormHeading'>Movie Title - Day - Time</h3>
           <input type="hidden" name="movie[id]" id="movie-id" value="">
@@ -831,18 +831,18 @@ if (!empty($_POST)) {
   <footer>
     <div class="contact-info">
       <div class="contact-info-column">
-        <p><img src="../media/mail.svg" alt="mail" />
+        <p><img src="./static/mail.svg" alt="mail" />
           <span class="contact-field">Email:</span><a href="mailto:lunardo@example.com"> lunardo@example.com</a>.
         </p>
-        <p><img src="../media/phone.svg" alt="phone" />
+        <p><img src="./static/phone.svg" alt="phone" />
           <span class="contact-field">Phone:</span><a href="tel:012-345-6789"> +012-345-6789</a>.
         </p>
       </div>
       <div class="contact-info-column">
-        <p><img src="../media/location.svg" alt="location" />
+        <p><img src="./static/location.svg" alt="location" />
           <span class="contact-field">Address:</span> 1 Lunar Street, VIC, Melbourne.
         </p>
-        <p><img src="../media/plane.svg" alt="github" />
+        <p><img src="./static/plane.svg" alt="github" />
           <span class="contact-field">GitHub:</span><a href="#"> Go-to-GitHub</a>.
         </p>
       </div>
@@ -865,7 +865,7 @@ if (!empty($_POST)) {
   </footer>
   <!-- End of footer -->
 
-  <script src="js/navProgrammingScript.js"></script>
+  <script src="./static/navProgrammingScript.js"></script>
 </body>
 
 </html>

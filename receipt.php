@@ -19,7 +19,7 @@ if (!empty($_SESSION['cart'])) {
     movieTitle($id);
     movieHour($hour);
 } else {
-    header('Location: ./index.php');
+    header('Location: ./index');
 }
 ?>
 
@@ -44,8 +44,8 @@ if (!empty($_SESSION['cart'])) {
         @import url('https://fonts.googleapis.com/css?family=Source+Sans+Pro&display=swap');
     </style>
 
-    <link id='stylecss' type="text/css" rel="stylesheet" href="css/receipt.css">
-    <link rel="icon" href="../media/lunardo_logo_icon.png" />
+    <link id='stylecss' type="text/css" rel="stylesheet" href="./static/receipt.css">
+    <link rel="icon" href="./static/lunardo_logo_icon.png" />
 </head>
 
 <body>
@@ -135,7 +135,7 @@ if (!empty($_SESSION['cart'])) {
         <?php while ($count > 0) : ?>
             <section class="ticket">
                 <div class="row">
-                    <div class="left"><img src='../media/lunardo_logo.png' alt='logo' /></div>
+                    <div class="left"><img src='./static/lunardo_logo.png' alt='logo' /></div>
                     <div class="right">
                         <div><span class="ticket-content">Ticket #<?php echo $ticket_no++; ?> // <?php echo movieDes($code); ?></span></div>
                         <div class="movie-title"><span><?php echo htmlspecialchars($id); ?></span></div>
@@ -172,9 +172,13 @@ $cells = array_merge(
     (array) ('$' . number_format($subtotal, 2))
 );
 $cart = $_SESSION['cart'];
-$fp = fopen('bookings.txt', 'a');
-fputcsv($fp, $cells, "\t");
-fclose($fp);
+
+$exists = file_get_contents('gs://lunardo-cinemas-bookings/bookings.txt');
+$exists .= "\n".implode("'\t'",$cells);
+
+$options = ['gs' => ['Content-Type' => 'text/plain', 'acl' => 'public-read']];
+$context = stream_context_create($options);
+file_put_contents('gs://lunardo-cinemas-bookings/bookings.txt', $exists, 0, $context);
 
 //destroy session after ordering ticket
 session_destroy();
