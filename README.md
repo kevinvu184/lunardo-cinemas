@@ -22,3 +22,8 @@ The client expects to have a grand reopening in a few months’ time (ie around 
 - Back end: PHP
 - DB: Textbase
 - Deploy Platform: Digital Ocean
+
+## Course outcome
+
+- Grade: 49.5/50 
+- Website has been selected as teaching materials in the future
