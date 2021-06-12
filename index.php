@@ -1,5 +1,5 @@
 <?php
-include_once('tools.php');
+include_once ('tools.php');
 session_start();
 
 //only variable for preparing html pages kept in index.php
@@ -18,59 +18,62 @@ $seatError = '';
 
 $_SESSION['cart'] = [];
 
-if (!empty($_POST)) {
-  
-  $expiryMonth = $_POST['cust']['expiryMonth'];
-  $expiryYear = $_POST['cust']['expiryYear'];
+if (!empty($_POST))
+{
 
-  $errorFound = false;
+    $expiryMonth = $_POST['cust']['expiryMonth'];
+    $expiryYear = $_POST['cust']['expiryYear'];
 
-  validateExpiryDate($expiryMonth, $expiryYear, $errorFound, $expiryError);
+    $errorFound = false;
 
-  //process valid post data for hidden field here
-  $movieID = $_POST['movie']['id'];
-  $synopsisID = '';
+    validateExpiryDate($expiryMonth, $expiryYear, $errorFound, $expiryError);
 
-  //set synopsis to display correct synopsis panel
-  if (validateMovieID($movieID, $errorFound)) {
-    $synopsisID = 'synopsis' . $movieID;
-  }
+    //process valid post data for hidden field here
+    $movieID = $_POST['movie']['id'];
+    $synopsisID = '';
 
-  //validate movie day
-  $movieDay = $_POST['movie']['day'];
-  validateMovieDay($movieDay, $errorFound);
+    //set synopsis to display correct synopsis panel
+    if (validateMovieID($movieID, $errorFound))
+    {
+        $synopsisID = 'synopsis' . $movieID;
+    }
 
-  //validate movie hour
-  $movieHour = $_POST['movie']['hour'];
-  validateMovieHour($movieHour, $errorFound);
+    //validate movie day
+    $movieDay = $_POST['movie']['day'];
+    validateMovieDay($movieDay, $errorFound);
 
-  //validate seat range
-  $seatArray = $_POST['seats'];
-  validateSeat($seatArray, $seatError, $errorFound);
+    //validate movie hour
+    $movieHour = $_POST['movie']['hour'];
+    validateMovieHour($movieHour, $errorFound);
 
-  //validate name
-  $name = $_POST['cust']['name'];
-  validateName($name, $nameError, $errorFound);
+    //validate seat range
+    $seatArray = $_POST['seats'];
+    validateSeat($seatArray, $seatError, $errorFound);
 
-  //validate mobile
-  $phone = $_POST['cust']['mobile'];
-  validatePhone($phone, $phoneError, $errorFound);
+    //validate name
+    $name = $_POST['cust']['name'];
+    validateName($name, $nameError, $errorFound);
 
-  //validate card
-  $creditCard = $_POST['cust']['card'];
-  validateCreditCard($creditCard, $creditCardError, $errorFound);
+    //validate mobile
+    $phone = $_POST['cust']['mobile'];
+    validatePhone($phone, $phoneError, $errorFound);
 
-  //validate email
-  $email = $_POST['cust']['email'];
-  validateEmail($email, $emailError, $errorFound);
+    //validate card
+    $creditCard = $_POST['cust']['card'];
+    validateCreditCard($creditCard, $creditCardError, $errorFound);
 
+    //validate email
+    $email = $_POST['cust']['email'];
+    validateEmail($email, $emailError, $errorFound);
 
-  //pass all validation direct to receipt page
-  if (!$errorFound) {
-    $_SESSION['cart'] = $_POST;
-    header('Location: ./receipt');
-  }
-  //end of post processing
+    //pass all validation direct to receipt page
+    if (!$errorFound)
+    {
+        $_SESSION['cart'] = $_POST;
+        header('Location: ./receipt.php');
+    }
+    //end of post processing
+    
 }
 ?>
 
@@ -661,14 +664,15 @@ if (!empty($_POST)) {
 
         <!--state programming -->
         <?php
-        if (!empty($_POST)) {
-          echo "<script>\n";
-          echo "displaySynopsisState(\"$synopsisID\");\n";
-          echo "</script>\n\n";
-        }
-        ?>
+if (!empty($_POST))
+{
+    echo "<script>\n";
+    echo "displaySynopsisState(\"$synopsisID\");\n";
+    echo "</script>\n\n";
+}
+?>
 
-        <form id='bookingForm' action="index#booking-anchor" method="POST" onsubmit="return formValidate();">
+        <form id='bookingForm' action="index.php#booking-anchor" method="POST" onsubmit="return formValidate();">
           <a class="anchor" id="booking-anchor"></a>
           <h3 id='bookingFormHeading'>Movie Title - Day - Time</h3>
           <input type="hidden" name="movie[id]" id="movie-id" value="">
@@ -718,6 +722,7 @@ if (!empty($_POST)) {
               <div class="form-total-box">
                 <label>Total $ </label>
                 <span id='finalPrice'>0.00 $</span>
+                <div class='errors' id='seatError'></div>
                 <?php echo $seatError; ?>
               </div>
             </div>
@@ -726,21 +731,28 @@ if (!empty($_POST)) {
                 <div class="form-group w2">
                   <label class="form-label" for="cust-name">Name</label>
                   <input class="form-control" type="text" placeholder="Enter your name" name="cust[name]" id="cust-name" value='<?php echo $name; ?>'>
+                  <span class='errors' id='nameError'></span>
+
                   <?php echo $nameError; ?>
                 </div>
                 <div class="form-group w2">
                   <label class="form-label" for="cust-email">Email</label>
                   <input class="form-control"  type="email" placeholder="Enter your email" name="cust[email]" id="cust-email" value='<?php echo $email; ?>'>
+                  <span class='errors' id='emailError'></span>
                   <?php echo $emailError; ?>
                 </div>
                 <div class="form-group w2">
                   <label class="form-label" for="cust-mobile">Mobile</label>
                   <input class="form-control" type="tel" placeholder="Enter your phone number" name="cust[mobile]" id="cust-mobile" value='<?php echo $phone; ?>'>
+                  <span class='errors' id='mobileError'></span>
+
                   <?php echo $phoneError; ?>
                 </div>
                 <div class="form-group w2">
                   <label class="form-label" for="cust-card">Credit Card</label>
                   <input class="form-control" type="text" placeholder="Enter Card Number" name="cust[card]" id="cust-card" value='<?php echo $creditCard; ?>'>
+                  <span class='errors' id='cardError'></span>
+
                   <?php echo $creditCardError; ?>
                 </div>
                 <div class="form-group w2">
@@ -749,6 +761,8 @@ if (!empty($_POST)) {
                   </select>
                   <select name="cust[expiryYear]" id="cust-expiryYear" onchange="limitMonth()" value='<?php echo $expiryYear; ?>'>
                   </select>
+                  <span class='errors' id='expiryError'></span>
+
                   <?php echo $expiryError; ?>
                 </div>
               </div>
@@ -759,17 +773,18 @@ if (!empty($_POST)) {
           </div>
         </form>
         <?php
-        if (!empty($_POST)) {
-          $title = "datetime" . $_POST['movie']['id'];
-          $day = $_POST['movie']['day'];
-          $hour = $_POST['movie']['hour'];
-          echo "\n\n<script>\n";
-          echo "updateBookingFormState(\"$title\", \"$day\", \"$hour\")\n";
-          echo "setValueForYear()\n";
-          echo "setValueForMonth()\n";
-          echo "</script>\n\n";
-        }
-        ?>
+if (!empty($_POST))
+{
+    $title = "datetime" . $_POST['movie']['id'];
+    $day = $_POST['movie']['day'];
+    $hour = $_POST['movie']['hour'];
+    echo "\n\n<script>\n";
+    echo "updateBookingFormState(\"$title\", \"$day\", \"$hour\")\n";
+    echo "setValueForYear()\n";
+    echo "setValueForMonth()\n";
+    echo "</script>\n\n";
+}
+?>
       </div>
     </section>
     <!-- End of now-showing -->
@@ -854,7 +869,7 @@ if (!empty($_POST)) {
         <script>
           document.write(new Date().getFullYear());
         </script>Tuan Vu - S3678491/Khoa Vu - S3678490. Last modified
-        <?= date("Y F d  H:i", filemtime($_SERVER['SCRIPT_FILENAME'])); ?>.
+        <?=date("Y F d  H:i", filemtime($_SERVER['SCRIPT_FILENAME'])); ?>.
       </div>
 
       <div>
@@ -875,4 +890,5 @@ if (!empty($_POST)) {
 // table('GET Data', $_GET);
 // table('SESSION[\'cart\'] Data', $_SESSION['cart']);
 // debugModule();
+
 ?>
