@@ -1,11 +1,10 @@
-# Lunardo Cinemas
+# [Lunardo Cinemas](https://[178.128.126.130/index.php](http://178.128.126.130/index.php)/)
 
 RMIT - WP Semester 2 2019
 
 © Kevin Vu 2019. Disclaimer: This repo is an asset of Kevin Vu and is being developed as part of a School of Science Further Web Programming course at RMIT University in Melbourne, Australia. Any plagiarism act will be reported.
 
-- Link: https://lunardo-cinemas.appspot.com/ **(Use Goolge Chrome)**
-- Db Link: https://storage.cloud.google.com/lunardo-cinemas-bookings/bookings.txt
+- Link: http://[178.128.126.130/index.php](http://178.128.126.130/index.php)/ 
 
 ## Team member
 - Kevin Vu
@@ -22,4 +21,4 @@ The client expects to have a grand reopening in a few months’ time (ie around 
 - Front end: HTML/CSS/JS
 - Back end: PHP
 - DB: Textbase
-- Deploy Platform: GAE (Google App Engine)
+- Deploy Platform: Digital Ocean
