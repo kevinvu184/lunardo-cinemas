@@ -1,4 +1,4 @@
-# [Lunardo Cinemas](https://[178.128.126.130/index.php](http://178.128.126.130/index.php)/)
+# Lunardo Cinema
 
 RMIT - WP Semester 2 2019
 
