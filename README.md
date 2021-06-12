@@ -4,7 +4,7 @@ RMIT - WP Semester 2 2019
 
 © Kevin Vu 2019. Disclaimer: This repo is an asset of Kevin Vu and is being developed as part of a School of Science Further Web Programming course at RMIT University in Melbourne, Australia. Any plagiarism act will be reported.
 
-- Link: http://[178.128.126.130/index.php](http://178.128.126.130/index.php)/ 
+- Link: https://lunardocinema.com 
 
 ## Team member
 - Kevin Vu
