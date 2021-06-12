@@ -1,36 +1,24 @@
-# ASSIGNMENT WEB PROGRAMMING
+# Lunardo Cinema
 
-This is a repo of TedVu for Assignments in WebProgramming course
+RMIT - WP Semester 2 2019
 
-Link to the Webpage to be developed: http://titan.csit.rmit.edu.au/~s3678491/wp/index.html
+© Kevin Vu 2019. Disclaimer: This repo is an asset of Kevin Vu and is being developed as part of a School of Science Further Web Programming course at RMIT University in Melbourne, Australia. Any plagiarism act will be reported.
 
-Assignment 2: https://titan.csit.rmit.edu.au/~s3678491/wp/a2/
+- Link: https://lunardocinema.com 
 
-Assignment 3: https://titan.csit.rmit.edu.au/~s3678491/wp/a3/
+## Team member
+- Kevin Vu
+- Ted Vu
 
-Assignment 4: https://titan.csit.rmit.edu.au/~s3678491/wp/a4/
+## Project Brief
+A small cinema business called "**Lunardo Cinemas**" (referred to hereafter as the client) is located in a medium sized country town and has asked you to develop their **website to promote its business, to take online bookings**.
 
-# Git Flow
-s1: `git clone https://github.com/s3678491/wp.git` at desired dir
+The Lunardo Cinema knows that cannot compete with the major chains (Village, Hoyts) which are located some distance away in larger towns and has relied too long on the loyalty and laziness of locals for business. A few months ago, the client decided to close for renovations, upgrade their cinema seating, and install new 3D projection facilities, new Dolby lighting and sound.
 
-s2: `cd wp`
+The client expects to have a grand reopening in a few months’ time (ie around **12 weeks**) and would like a new website ready to launch the new cinema.
 
-s3: `check out ted`
-
-s4: Add and Commit new change regularly
-
-  `git add .`
-
-  `git commit -m "<message>"`
-
-s5: Push after every working session
-
-  `git push`
-
-> Caution: Only work on your local dir. DO NOT copy file directly to remote (GitHub) dir
-
-- **master** branch: DO NOT commit and push directly to master branch
-- **dev** branch:
-  + Create from master
-- **feature** branches: 
-  + Create from dev
+## Stack
+- Front end: HTML/CSS/JS
+- Back end: PHP
+- DB: Textbase
+- Deploy Platform: Digital Ocean

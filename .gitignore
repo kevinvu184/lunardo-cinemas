@@ -1,3 +1,10 @@
+<<<<<<< HEAD
 .htaccess
 Thumbs.db
+=======
+*.gif
+*.png
+*.jpg
+*.svg
+>>>>>>> deploy
 .vscode/

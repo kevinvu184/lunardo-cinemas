@@ -58,9 +58,10 @@ var timesArray = {
 }
 function updateBookingFormState(title, day, time) {
     var updatedHeading = document.getElementById('bookingFormHeading');
-
     let contentToBeUpdated = titlesArray[title] + ' - ' + daysArray[day] + ' - ' + timesArray[time];
     updatedHeading.innerHTML = contentToBeUpdated;
+
+
     seedSeatData();
     displayBookingForm();
     calcPrice();
@@ -73,7 +74,7 @@ function displayBookingForm() {
 }
 
 
-//this function is used to seat initial data for seats from 1-10
+//this function is used to seed initial data for seats from 1-10
 var firstTimeRendering = 0;
 var seatCodes = ['STA', 'STP', 'STC', 'FCP', 'FCC', 'FCA'];
 function seedSeatData() {

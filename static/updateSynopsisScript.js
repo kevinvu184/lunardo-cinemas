@@ -13,6 +13,6 @@ function displaySynopsis() {
 }
 
 function displaySynopsisState(synopsisID) {
-
+    console.log("TEST: " + synopsisID);
     document.getElementById(synopsisID).style.display = 'inline-block';
 }
