@@ -20,7 +20,6 @@ The client expects to have a grand reopening in a few months’ time (ie around 
 ## Stack
 - Front end: HTML/CSS/JS
 - Back end: PHP
-- DB: Textbase
 - Deploy Platform: Digital Ocean
 
 ## Course outcome
